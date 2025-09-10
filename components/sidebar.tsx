@@ -16,6 +16,7 @@ import {
   ChevronLeft,
   ChevronRight,
   Wrench,
+  Building,
 } from "lucide-react"
 
 interface SidebarProps {
@@ -23,6 +24,7 @@ interface SidebarProps {
   activeTab?: string
   onTabChange?: (tab: string) => void
   onLogout?: () => void
+  workspaceName?: string // Added workspace name prop
 }
 
 const navigationItems = [
@@ -43,7 +45,7 @@ const bottomItems = [
   { icon: LogOut, label: "Logout", href: "#" },
 ]
 
-export function Sidebar({ className, activeTab = "knowledge", onTabChange, onLogout }: SidebarProps) {
+export function Sidebar({ className, activeTab = "knowledge", onTabChange, onLogout, workspaceName }: SidebarProps) {
   const [isCollapsed, setIsCollapsed] = useState(false)
 
   const handleLogout = () => {
@@ -70,6 +72,24 @@ export function Sidebar({ className, activeTab = "knowledge", onTabChange, onLog
           {isCollapsed ? <ChevronRight className="h-4 w-4" /> : <ChevronLeft className="h-4 w-4" />}
         </Button>
       </div>
+
+      {workspaceName && (
+        <div className="p-4 border-b border-slate-700 bg-slate-900/50">
+          <div className="flex items-center gap-3">
+            <div className="flex-shrink-0">
+              <Building className="h-5 w-5 text-primary" />
+            </div>
+            {!isCollapsed && (
+              <div className="min-w-0 flex-1">
+                <p className="text-xs text-slate-400 uppercase tracking-wide">Workspace</p>
+                <p className="text-sm font-medium text-white truncate" title={workspaceName}>
+                  {workspaceName}
+                </p>
+              </div>
+            )}
+          </div>
+        </div>
+      )}
 
       {/* Navigation */}
       <nav className="flex-1 p-4 space-y-2">

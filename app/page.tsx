@@ -49,6 +49,7 @@ export default function KnowledgeHub() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("knowledge")
   const [isLoggedIn, setIsLoggedIn] = useState(false)
+  const [workspaceName, setWorkspaceName] = useState("") // Added workspace name state
 
   const handleSearch = () => {
     console.log("Searching for:", searchQuery)
@@ -61,23 +62,30 @@ export default function KnowledgeHub() {
     console.log("Clicked feature:", title)
   }
 
-  const handleLogin = () => {
+  const handleLoginWithWorkspace = (workspace: string) => {
+    setWorkspaceName(workspace)
     setIsLoggedIn(true)
   }
 
   const handleLogout = () => {
     setIsLoggedIn(false)
     setActiveTab("knowledge") // Reset to default tab
+    setWorkspaceName("") // Clear workspace name on logout
   }
 
   if (!isLoggedIn) {
-    return <LoginForm onLogin={handleLogin} />
+    return <LoginForm onLogin={handleLoginWithWorkspace} />
   }
 
   if (activeTab === "feedback") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
+        <Sidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onLogout={handleLogout}
+          workspaceName={workspaceName}
+        />
         <FeedbackPage />
       </div>
     )
@@ -86,7 +94,12 @@ export default function KnowledgeHub() {
   if (activeTab === "troubleshooting") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
+        <Sidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onLogout={handleLogout}
+          workspaceName={workspaceName}
+        />
         <TroubleshootingForm />
       </div>
     )
@@ -95,7 +108,12 @@ export default function KnowledgeHub() {
   if (activeTab === "maintenancelog") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
+        <Sidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onLogout={handleLogout}
+          workspaceName={workspaceName}
+        />
         <MaintenanceLogging />
       </div>
     )
@@ -104,7 +122,12 @@ export default function KnowledgeHub() {
   if (activeTab === "oemanuals") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
+        <Sidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onLogout={handleLogout}
+          workspaceName={workspaceName}
+        />
         <OEMManuals />
       </div>
     )
@@ -112,7 +135,7 @@ export default function KnowledgeHub() {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} workspaceName={workspaceName} />
       <main className="flex-1 overflow-auto">
         {/* Header */}
         <header className="glass-effect border-b border-border/30 p-8 relative overflow-hidden">

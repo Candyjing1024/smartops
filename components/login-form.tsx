@@ -11,7 +11,7 @@ import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/com
 import { User, Lock, Globe, Building } from "lucide-react"
 
 interface LoginFormProps {
-  onLogin: () => void
+  onLogin: (workspaceName: string) => void // Updated to pass workspace name
 }
 
 export function LoginForm({ onLogin }: LoginFormProps) {
@@ -23,7 +23,7 @@ export function LoginForm({ onLogin }: LoginFormProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault()
     console.log("Login attempt:", { username, language, workspace })
-    onLogin()
+    onLogin(workspace) // Pass workspace name to parent
   }
 
   return (
