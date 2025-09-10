@@ -11,6 +11,7 @@ import { Input } from "@/components/ui/input"
 import { Search, BookOpen, Sparkles, FileText, Database, Award, Shield } from "lucide-react"
 import { MaintenanceLogging } from "@/components/maintenance-logging"
 import { FeedbackPage } from "@/components/feedback-page"
+import { AskDigitalWorker } from "@/components/ask-digital-worker"
 
 const features = [
   {
@@ -58,6 +59,9 @@ export default function KnowledgeHub() {
   const handleFeatureClick = (title: string) => {
     if (title === "OEM Manuals") {
       setActiveTab("oemanuals")
+    }
+    if (title === "Ask Digital Worker") {
+      setActiveTab("askdigitalworker")
     }
     console.log("Clicked feature:", title)
   }
@@ -129,6 +133,20 @@ export default function KnowledgeHub() {
           workspaceName={workspaceName}
         />
         <OEMManuals />
+      </div>
+    )
+  }
+
+  if (activeTab === "askdigitalworker") {
+    return (
+      <div className="flex h-screen bg-background">
+        <Sidebar
+          activeTab={activeTab}
+          onTabChange={setActiveTab}
+          onLogout={handleLogout}
+          workspaceName={workspaceName}
+        />
+        <AskDigitalWorker />
       </div>
     )
   }
