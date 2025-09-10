@@ -60,11 +60,22 @@ export function AskDigitalWorker() {
         body: JSON.stringify({ message: inputMessage }),
       })
 
-      if (!response.ok) {
-        throw new Error("Failed to get response")
-      }
-
       const data = await response.json()
+
+      if (!response.ok) {
+        if (response.status === 429 && data.fallbackResponse) {
+          // Use fallback response for quota exceeded errors
+          const fallbackMessage: Message = {
+            id: (Date.now() + 1).toString(),
+            content: data.fallbackResponse,
+            sender: "assistant",
+            timestamp: new Date(),
+          }
+          setMessages((prev) => [...prev, fallbackMessage])
+          return
+        }
+        throw new Error(data.error || "Failed to get response")
+      }
 
       const assistantMessage: Message = {
         id: (Date.now() + 1).toString(),
@@ -78,7 +89,8 @@ export function AskDigitalWorker() {
       console.error("Error sending message:", error)
       const errorMessage: Message = {
         id: (Date.now() + 1).toString(),
-        content: "Sorry, I encountered an error. Please try again.",
+        content:
+          "Sorry, I encountered an error. Please try again later or consult your local documentation for immediate assistance.",
         sender: "assistant",
         timestamp: new Date(),
       }

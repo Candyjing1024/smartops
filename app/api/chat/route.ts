@@ -36,6 +36,17 @@ export async function POST(request: NextRequest) {
     })
 
     if (error instanceof Error) {
+      if (error.message.includes("quota") || error.message.includes("billing")) {
+        return NextResponse.json(
+          {
+            error:
+              "OpenAI API quota exceeded. Please check your billing details at platform.openai.com or try again later.",
+            fallbackResponse:
+              "I'm currently unable to process your request due to API limitations. For immediate assistance with manufacturing, maintenance, or safety questions, please consult your local documentation or contact your supervisor.",
+          },
+          { status: 429 },
+        )
+      }
       if (error.message.includes("API key")) {
         return NextResponse.json({ error: "Invalid API key configuration" }, { status: 401 })
       }

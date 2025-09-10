@@ -5,7 +5,6 @@ import { Sidebar } from "@/components/sidebar"
 import { FeatureCard } from "@/components/feature-card"
 import { TroubleshootingForm } from "@/components/troubleshooting-form"
 import { OEMManuals } from "@/components/oem-manuals"
-import { LoginForm } from "@/components/login-form"
 import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, BookOpen, Sparkles, FileText, Database, Award, Shield } from "lucide-react"
@@ -49,8 +48,7 @@ const features = [
 export default function KnowledgeHub() {
   const [searchQuery, setSearchQuery] = useState("")
   const [activeTab, setActiveTab] = useState("knowledge")
-  const [isLoggedIn, setIsLoggedIn] = useState(false)
-  const [workspaceName, setWorkspaceName] = useState("") // Added workspace name state
+  const workspaceName = "Digital Worker Workspace"
 
   const handleSearch = () => {
     console.log("Searching for:", searchQuery)
@@ -66,30 +64,10 @@ export default function KnowledgeHub() {
     console.log("Clicked feature:", title)
   }
 
-  const handleLoginWithWorkspace = (workspace: string) => {
-    setWorkspaceName(workspace)
-    setIsLoggedIn(true)
-  }
-
-  const handleLogout = () => {
-    setIsLoggedIn(false)
-    setActiveTab("knowledge") // Reset to default tab
-    setWorkspaceName("") // Clear workspace name on logout
-  }
-
-  if (!isLoggedIn) {
-    return <LoginForm onLogin={handleLoginWithWorkspace} />
-  }
-
   if (activeTab === "feedback") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          onLogout={handleLogout}
-          workspaceName={workspaceName}
-        />
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} workspaceName={workspaceName} />
         <FeedbackPage />
       </div>
     )
@@ -98,12 +76,7 @@ export default function KnowledgeHub() {
   if (activeTab === "troubleshooting") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          onLogout={handleLogout}
-          workspaceName={workspaceName}
-        />
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} workspaceName={workspaceName} />
         <TroubleshootingForm />
       </div>
     )
@@ -112,12 +85,7 @@ export default function KnowledgeHub() {
   if (activeTab === "maintenancelog") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          onLogout={handleLogout}
-          workspaceName={workspaceName}
-        />
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} workspaceName={workspaceName} />
         <MaintenanceLogging />
       </div>
     )
@@ -126,12 +94,7 @@ export default function KnowledgeHub() {
   if (activeTab === "oemanuals") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          onLogout={handleLogout}
-          workspaceName={workspaceName}
-        />
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} workspaceName={workspaceName} />
         <OEMManuals />
       </div>
     )
@@ -140,12 +103,7 @@ export default function KnowledgeHub() {
   if (activeTab === "askdigitalworker") {
     return (
       <div className="flex h-screen bg-background">
-        <Sidebar
-          activeTab={activeTab}
-          onTabChange={setActiveTab}
-          onLogout={handleLogout}
-          workspaceName={workspaceName}
-        />
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} workspaceName={workspaceName} />
         <AskDigitalWorker />
       </div>
     )
@@ -153,7 +111,7 @@ export default function KnowledgeHub() {
 
   return (
     <div className="flex h-screen bg-gradient-to-br from-background via-background to-primary/5">
-      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} workspaceName={workspaceName} />
+      <Sidebar activeTab={activeTab} onTabChange={setActiveTab} workspaceName={workspaceName} />
       <main className="flex-1 overflow-auto">
         {/* Header */}
         <header className="glass-effect border-b border-border/30 p-8 relative overflow-hidden">
