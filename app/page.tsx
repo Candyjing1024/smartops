@@ -10,6 +10,7 @@ import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { Search, BookOpen, Sparkles, FileText, Database, Award, Shield } from "lucide-react"
 import { MaintenanceLogging } from "@/components/maintenance-logging"
+import { FeedbackPage } from "@/components/feedback-page"
 
 const features = [
   {
@@ -71,6 +72,15 @@ export default function KnowledgeHub() {
 
   if (!isLoggedIn) {
     return <LoginForm onLogin={handleLogin} />
+  }
+
+  if (activeTab === "feedback") {
+    return (
+      <div className="flex h-screen bg-background">
+        <Sidebar activeTab={activeTab} onTabChange={setActiveTab} onLogout={handleLogout} />
+        <FeedbackPage />
+      </div>
+    )
   }
 
   if (activeTab === "troubleshooting") {

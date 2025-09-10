@@ -32,6 +32,7 @@ const navigationItems = [
   { icon: BookOpen, label: "Knowledge Hub", href: "#", id: "knowledge", active: true },
   { icon: Wrench, label: "Troubleshooting", href: "#", id: "troubleshooting" },
   { icon: FileText, label: "Maintenance Logging", href: "#", id: "maintenancelog" },
+  { icon: HelpCircle, label: "Feedback", href: "#", id: "feedback" },
 ]
 
 const bottomItems = [
